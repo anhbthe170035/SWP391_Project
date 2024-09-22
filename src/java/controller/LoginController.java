@@ -77,13 +77,13 @@ public class LoginController extends HttpServlet {
         // Create an instance of UserDAO
         UserDAO ud = new UserDAO();
         // Set the parameters of username and password
-        String username = request.getParameter("username");
+        String email = request.getParameter("email");
         String password = request.getParameter("password");
         // Check login of user
-        User u = ud.checkLogin(username, password);
+        User u = ud.checkLogin(email, password);
         
         // Only proceed if both username and password are provided
-        if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
+        if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
             request.getRequestDispatcher("login.jsp").forward(request, response);
             return;
         }
