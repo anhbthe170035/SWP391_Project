@@ -42,6 +42,22 @@ public class UserDAO extends DBContext{
         }
         return null;
     }
+    
+    public boolean checkAccoutExist(String username) {
+        String query = "select * from [dbo].[Users] where username = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            ps.setString(1, username);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return true;
+            }
+        } catch (Exception e) {
+        }
+
+        return false;
+    }
 
     public boolean checkEmailExist(String email) {
         String query = "select * from [dbo].[Users] where email = ?";
@@ -101,5 +117,4 @@ public class UserDAO extends DBContext{
         }
         return username;
     }
-    
 }

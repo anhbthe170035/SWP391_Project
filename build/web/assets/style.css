@@ -113,6 +113,9 @@ img{
 .product-item .checked{
     color: orange;
 }
+header{
+    background-color: #3333ff;
+}
 footer{
     padding: 10px 200px;
     background-color: #3333ff;

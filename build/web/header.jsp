@@ -8,7 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <div class="header">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="color: #3333ff">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="home">
             <img src="./assets/drugstore.png" width="50" height="50" alt="">
         </a>

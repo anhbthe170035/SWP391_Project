@@ -48,9 +48,13 @@ public class RegisterController extends HttpServlet {
         UserDAO userDAO = new UserDAO();
 
         if (password.equals(re_password)) {
-            if (userDAO.checkEmailExist(email)) {
+            if (userDAO.checkAccoutExist(username)){
+                request.setAttribute("error", "Username is exist");
+                request.getRequestDispatcher("register.jsp").forward(request, response);
+            }
+            else if (userDAO.checkEmailExist(email)) {
                 request.setAttribute("error", "Email is exist");
-                request.getRequestDispatcher("signup.jsp").forward(request, response);
+                request.getRequestDispatcher("register.jsp").forward(request, response);
             } else {
                 userDAO.addUser(user);
                 request.setAttribute("error", "Login to Continue");
