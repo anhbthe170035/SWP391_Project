@@ -4,6 +4,8 @@
  */
 package controller;
 
+import dao.UserDAO;
+import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -71,7 +74,32 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        // Create an instance of UserDAO
+        UserDAO ud = new UserDAO();
+        // Set the parameters of username and password
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        // Check login of user
+        User u = ud.checkLogin(email, password);
+        
+        // Only proceed if both username and password are provided
+        if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+            return;
+        }
+        
+        if (u == null){
+            // If the user is not found (invalid credentials), set an error message
+            request.setAttribute("error", "Wrong username or password");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+
+        }
+        else{
+            // If the user credentials are valid, create a new session
+            HttpSession session = request.getSession();
+            session.setAttribute("user", u);
+            request.getRequestDispatcher("home").forward(request, response);
+        }
     }
 
     /**
